@@ -43,7 +43,5 @@ def exFacialCurve(vertex: numpy.array, res: int, p: float, rp: numpy.array, npt:
 
             xx, yy, zz = sph2cart(xc, yc, zc)
 
-            print("exFacialCurve:",xx.shape, yy.shape, zz.shape)
-
             cdata2.append(numpy.array([xx, yy, zz]).T)
         return cdata2
