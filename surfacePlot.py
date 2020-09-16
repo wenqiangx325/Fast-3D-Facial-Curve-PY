@@ -2,7 +2,14 @@ import numpy
 from scipy.interpolate import griddata
 
 
-def surfacePlot(x3: numpy.ndarray, y3: numpy.ndarray, z3: numpy.ndarray, res):
+def surfacePlot(VM: numpy.array, res:int):
+
+    if VM.shape[0] == 3:
+        VM = numpy.transpose(VM)
+
+    x3 = VM[:, 0]
+    y3 = VM[:, 1]
+    z3 = VM[:, 2]
 
     x3 = x3 - x3[z3 == numpy.max(z3)]
     y3 = y3 - y3[z3 == numpy.max(z3)]
@@ -19,5 +26,5 @@ def surfacePlot(x3: numpy.ndarray, y3: numpy.ndarray, z3: numpy.ndarray, res):
         (qx33, qy33),
         method='linear'
     )
-    
+
     return qx33, qy33, qz33

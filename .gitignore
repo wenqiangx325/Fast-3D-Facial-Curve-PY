@@ -1,2 +1,5 @@
 # ignore folder .venv
 .venv
+
+# ignore file *.pyc
+*.pyc
