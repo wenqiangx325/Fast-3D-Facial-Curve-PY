@@ -23,9 +23,9 @@ for i, file in enumerate(folderContent):
     
     res = 100
 
-    sel = 2
+    sel = 1
 
-    lvSet = np.arange(0, 70, 10)
+    lvSet = np.arange(0, 360, 20)
 
     npt = 20
 

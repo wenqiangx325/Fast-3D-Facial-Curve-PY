@@ -13,9 +13,9 @@ def visualizeCurve(vertex, res, curveSet):
 
     fig = plt.figure()
     ax = Axes3D(fig)
-    ax.plot(xxl,yyl,zzl, "ro", markersize=1)
+    ax.plot(xxl,yyl,zzl, "ro", markersize=5, mfc='none')
 
     for curve in curveSet:
         x, y, z = zip(*curve)
-        ax.plot(x, y, z, 'ks', markersize="1")
+        ax.plot(x, y, z, 'ks', markersize="5", mfc='none')
     plt.show()

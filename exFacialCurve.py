@@ -1,7 +1,7 @@
-
-import enum
+from matplotlib.pyplot import axis
 import numpy
 from numpy.core import numeric
+from scipy import interpolate
 
 from sph2cart import sph2cart
 from cart2sph import cart2sph
@@ -19,18 +19,29 @@ def exFacialCurve(vertex: numpy.array, res: int, p: float, rp: numpy.array, npt:
     r = r[~numpy.isnan(r)]
 
     if p == 1:
-        for i, t in enum(nth):
-            piu = nth[t]
+        cdata1 = list()
+        for i, t in enumerate(nth):
+            piu = nth[i]
             if piu > 180:
                 theta = (180-piu)/57.7
             else:
                 theta = piu/57.7
-            
-            xc = th[th>theta and th<theta+0.05]
-            yc = phi[th>theta and th<theta+0.05]
-            zc = r[th>theta and th<theta+0.05]
+
+            xc = th[numpy.array(th > theta) & numpy.array(th < theta+0.05)]
+            yc = phi[numpy.array(th > theta) & numpy.array(th < theta+0.05)]
+            zc = r[numpy.array(th > theta) & numpy.array(th < theta+0.05)]
 
             xx, yy, zz = sph2cart(xc, yc, zc)
+            cdata = numpy.array([xx, yy, zz]).T
+            
+            cdist = numpy.concatenate(
+                (numpy.array([0]),
+                 numpy.cumsum(numpy.sqrt(
+                     numpy.sum(numpy.diff(cdata, axis=0) ** 2, axis=1)))),
+                axis=0)
+            ccurve = interpolate.interp1d(cdist, cdata, "cubic", axis=0)(numpy.linspace(0, cdist[-1], npt))
+            cdata1.append(numpy.array(ccurve))
+        return cdata1
 
     else:
         cdata2 = list()
