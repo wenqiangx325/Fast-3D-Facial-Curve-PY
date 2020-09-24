@@ -33,5 +33,3 @@ for i, file in enumerate(folderContent):
 
     visualizeCurve(vertex, res, curVSet)
     
-
-
